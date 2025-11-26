@@ -21,7 +21,7 @@
 }
 
 @font-face {
-  font-family: 'zentry-regular';
+  font-family: 'Zentry';
   src: url('/fonts/zentry-regular.woff2') format('woff2');
 }
 
@@ -30,7 +30,41 @@
   --font-general: 'general', sans-serif;
   --font-robert-medium: 'robert-medium', sans-serif;
   --font-robert-regular: 'robert-regular', sans-serif;
-  --font-zentry-regular: 'zentry-regular', sans-serif;
+  --font-zentry: 'Zentry', sans-serif;
+
+  --color-blue-50: #dfdff0;
+  --color-blue-75: #dfdff2;
+  --color-blue-100: #f0f2fa;
+  --color-blue-200: #010101;
+  --color-blue-300: #4fb7dd;
+
+  --color-violet-300: #5724ff;
+
+  --color-yellow-100: #8e983f;
+  --color-yellow-300: #edff66;
+}
+
+@layer utilities {
+  .absolute-center {
+    @apply absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%];
+  }
+
+  .mask-clip-path {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .special-font b {
+    font-family: 'Zentry';
+    font-feature-settings: 'ss01' on;
+  }
+
+  .hero-heading {
+    @apply uppercase font-zentry font-black text-5xl sm:right-10 sm:text-7xl md:text-9xl lg:text-[12rem];
+  }
+
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
 }
 
 body {

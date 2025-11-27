@@ -1,9 +1,14 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { TiLocationArrow } from 'react-icons/ti'
+import { useGSAP } from '@gsap/react'
+import gsap from 'gsap'
 
 import { Button } from 'src/atoms'
 
 const Hero = () => {
+  const transformVideoRef = useRef<HTMLVideoElement>(null)
+  const isFirstRender = useRef(true)
+
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0)
 
   const nextVideoIndex = (currentVideoIndex + 1) % 4
@@ -12,6 +17,38 @@ const Hero = () => {
     setCurrentVideoIndex((index) => (index + 1) % 4)
 
   const getVideoSrc = (index: number) => `/videos/hero-${index + 1}.mp4`
+
+  useGSAP(
+    () => {
+      if (isFirstRender.current) {
+        isFirstRender.current = false
+        return
+      }
+
+      gsap.set('#transform-video', { visibility: 'visible' })
+      gsap.to('#transform-video', {
+        transformOrigin: 'center center',
+        scale: 1,
+        width: '100%',
+        height: '100%',
+        duration: 1,
+        ease: 'power1.inOut',
+        onStart: () => {
+          transformVideoRef.current?.play()
+        },
+      })
+      gsap.from('#next-video', {
+        transformOrigin: 'center center',
+        scale: 0,
+        duration: 1.5,
+        ease: 'power1.inOut',
+      })
+    },
+    {
+      dependencies: [currentVideoIndex],
+      revertOnUpdate: true,
+    }
+  )
 
   return (
     <div className="relative h-screen w-screen overflow-x-hidden">
@@ -23,6 +60,7 @@ const Hero = () => {
               className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
             >
               <video
+                id="next-video"
                 src={getVideoSrc(nextVideoIndex)}
                 loop
                 muted
@@ -31,6 +69,8 @@ const Hero = () => {
             </div>
           </div>
           <video
+            id="transform-video"
+            ref={transformVideoRef}
             src={getVideoSrc(currentVideoIndex)}
             loop
             muted

@@ -1,22 +1,22 @@
 @import 'tailwindcss';
 
 @font-face {
-  font-family: 'circularweb-book';
+  font-family: 'Circular Web';
   src: url('/fonts/circularweb-book.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'general';
+  font-family: 'General';
   src: url('/fonts/general.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'robert-medium';
+  font-family: 'Robert Medium';
   src: url('/fonts/robert-medium.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'robert-regular';
+  font-family: 'Robert Regular';
   src: url('/fonts/robert-regular.woff2') format('woff2');
 }
 
@@ -26,10 +26,10 @@
 }
 
 @theme {
-  --font-circularweb-book: 'circularweb-book', sans-serif;
-  --font-general: 'general', sans-serif;
-  --font-robert-medium: 'robert-medium', sans-serif;
-  --font-robert-regular: 'robert-regular', sans-serif;
+  --font-circular-web: 'Circular Web', sans-serif;
+  --font-general: 'General', sans-serif;
+  --font-robert-medium: 'Robert Medium', sans-serif;
+  --font-robert-regular: 'Robert Regular', sans-serif;
   --font-zentry: 'Zentry', sans-serif;
 
   --color-blue-50: #dfdff0;
@@ -49,6 +49,10 @@
     @apply absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%];
   }
 
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+
   .mask-clip-path {
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   }
@@ -62,8 +66,12 @@
     @apply uppercase font-zentry font-black text-5xl sm:right-10 sm:text-7xl md:text-9xl lg:text-[12rem];
   }
 
-  .flex-center {
-    @apply flex justify-center items-center;
+  .about-subtext {
+    @apply absolute bottom-[-80dvh] left-1/2 w-full max-w-96 -translate-x-1/2 text-center font-circular-web text-lg md:max-w-[34rem];
+  }
+
+  .about-image {
+    @apply absolute left-1/2 top-0 z-20 h-[60vh] w-96 origin-center -translate-x-1/2 overflow-hidden rounded-3xl md:w-[30vw];
   }
 }
 

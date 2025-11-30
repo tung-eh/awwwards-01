@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import clsx from 'clsx'
 import { TiLocationArrow } from 'react-icons/ti'
+import gsap from 'gsap'
 
 import { Button } from 'src/atoms'
 
@@ -21,7 +22,11 @@ const Navbar = () => {
     }
   }, [isAudioPlaying])
 
+  const [isNavVisible, setIsNavVisible] = useState(true)
+
   useEffect(() => {
+    let lastScrollY = 0
+
     const handleScroll = () => {
       const currentScrollY = window.scrollY
 
@@ -30,12 +35,28 @@ const Navbar = () => {
       } else {
         containerRef.current?.classList.add('floating-nav')
       }
+
+      if (currentScrollY > lastScrollY) {
+        setIsNavVisible(false)
+      } else {
+        setIsNavVisible(true)
+      }
+
+      lastScrollY = currentScrollY
     }
 
     window.addEventListener('scroll', handleScroll)
 
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  useEffect(() => {
+    gsap.to(containerRef.current, {
+      y: isNavVisible ? 0 : -100,
+      opacity: isNavVisible ? 1 : 0,
+      duration: 0.2,
+    })
+  }, [isNavVisible])
 
   return (
     <div

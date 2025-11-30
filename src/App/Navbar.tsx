@@ -7,10 +7,10 @@ import { Button } from 'src/atoms'
 const navItems = ['Nexus', 'Vault', 'Prologue', 'About', 'Contact']
 
 const Navbar = () => {
+  const containerRef = useRef<HTMLDivElement>(null)
   const audioRef = useRef<HTMLAudioElement>(null)
 
   const [isAudioPlaying, setIsAudioPlaying] = useState(false)
-
   const toggleAudio = () => setIsAudioPlaying((p) => !p)
 
   useEffect(() => {
@@ -21,8 +21,27 @@ const Navbar = () => {
     }
   }, [isAudioPlaying])
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+
+      if (currentScrollY === 0) {
+        containerRef.current?.classList.remove('floating-nav')
+      } else {
+        containerRef.current?.classList.add('floating-nav')
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
-    <div className="fixed inset-x-0 top-4 z-50 h-16 border-none transition-all duration-700 sm:inset-x-6">
+    <div
+      ref={containerRef}
+      className="fixed inset-x-0 top-4 z-50 h-16 border-none transition-all duration-700 sm:inset-x-6"
+    >
       <header className="absolute top-1/2 w-full -translate-y-1/2">
         <nav className="flex size-full items-center justify-between p-4">
           <div className="flex items-center gap-7">

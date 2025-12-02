@@ -46,7 +46,10 @@ const AnimatedTitle = ({
   return (
     <div
       ref={containerRef}
-      className={twMerge('animated-title text-white', className)}
+      className={twMerge(
+        'animated-title text-white text-7xl leading-[.8] md:text-[6rem]',
+        className
+      )}
     >
       {title.split('<br />').map((line, index) => (
         <div

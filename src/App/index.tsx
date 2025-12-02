@@ -4,6 +4,7 @@ import About from './About'
 import Features from './Features'
 import Story from './Story'
 import Contact from './Contact'
+import Footer from './Footer'
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
       <Features />
       <Story />
       <Contact />
+      <Footer />
     </main>
   )
 }

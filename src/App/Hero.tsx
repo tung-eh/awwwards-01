@@ -13,11 +13,15 @@ const Hero = () => {
   const isFirstRender = useRef(true)
 
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0)
-
   const nextVideoIndex = (currentVideoIndex + 1) % 4
 
   const onClickNextVideo = () =>
     setCurrentVideoIndex((index) => (index + 1) % 4)
+
+  const [loadedVideoCount, setLoadedVideoCount] = useState(0)
+  const isLoading = loadedVideoCount < 3
+
+  const handleVideoLoaded = () => setLoadedVideoCount((c) => c + 1)
 
   const getVideoSrc = (index: number) => `/videos/hero-${index + 1}.mp4`
 
@@ -73,6 +77,16 @@ const Hero = () => {
 
   return (
     <div className="relative h-screen w-screen overflow-x-hidden">
+      {isLoading && (
+        <div className="flex-center absolute z-[100] h-dvh w-screen overflow-hidden bg-violet-50">
+          <div className="three-body">
+            <div className="three-body__dot"></div>
+            <div className="three-body__dot"></div>
+            <div className="three-body__dot"></div>
+          </div>
+        </div>
+      )}
+
       <div
         id="video-frame"
         className="relative z-10 h-screen w-screen overflow-hidden rounded-lg bg-blue-75"
@@ -88,6 +102,7 @@ const Hero = () => {
                 src={getVideoSrc(nextVideoIndex)}
                 loop
                 muted
+                onLoadedData={handleVideoLoaded}
                 className="size-64 origin-center scale-150 object-cover object-center"
               />
             </div>
@@ -98,6 +113,7 @@ const Hero = () => {
             src={getVideoSrc(currentVideoIndex)}
             loop
             muted
+            onLoadedData={handleVideoLoaded}
             className="absolute-center invisible z-20 size-64 object-cover object-center"
           />
           <video
@@ -105,6 +121,7 @@ const Hero = () => {
             loop
             muted
             autoPlay
+            onLoadedData={handleVideoLoaded}
             className="absolute top-0 left-0 size-full object-cover object-center"
           />
         </div>
